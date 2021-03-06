@@ -26,13 +26,21 @@ app.get('/api/waitlist', (req, res) => res.json(waitlist));
 
 
 //Post methods
-app.post('/reservations', (req, res)=>{
+app.post('/api/tables', (req, res)=>{
 
+    const newReservation=req.body;
 
+    tables.push(newReservation);
+
+    console.log(tables);
 });
 
-app.post('/tables', (req, res)=>{
+app.post('/api/waitlist', (req, res)=>{
+    const newWaitlist=req.body;
 
+    waitlist.push(newWaitlist);
+
+    console.log(tables);
 });
 
 
