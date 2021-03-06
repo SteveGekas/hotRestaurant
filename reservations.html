@@ -36,7 +36,7 @@
                         <h4>Current Reservations</h4>
                     </div>
                     <div class="card-body">
-                        <ul id="tableList" class="list-group"></ul>
+                        <ul id="reservation" class="submitResults"></ul>
                     </div>
                 </div>
 
@@ -45,7 +45,7 @@
                         <h4>Wait List</h4>
                     </div>
                     <div class="card-body">
-                        <ul id="waitList" class="list-group"></ul>
+                        <ul id="waitlisted" class="submitResults"></ul>
                     </div>
                 </div>
             </div>
@@ -55,11 +55,61 @@
 
     <footer class="footer mt-4">
         <div class="container">
-          <p><a href="#" id="clear">Clear Table</a> | <a href="">API Table Link</a> | <a href="">API
-              Wait List</a>
+            <p><a href="#" id="clear">Clear Table</a> | <a href="">API Table Link</a> | <a href="">API
+                    Wait List</a>
         </div>
-      </footer>
+    </footer>
 
 </body>
+
+<script type="text/javascript">
+    function runReservedQuery() {
+
+        $.ajax({ url: "/api/tables", method: "GET" })
+
+            .then(function (tableDinerInfo) {
+
+                console.log(tableDinerInfo);
+                for (var i = 0; i < tableDinerInfo.length; i++) {
+                    var reservation = $("#reserved");
+                    var submission = $("<li class='submitResults'>");
+                    submission.append(
+                        $("<h2>").text("Table #" + (i + 1)),
+                        $("<h2>").text("ID: " + tableDinerInfo[i].dinerId),
+                        $("<h2>").text("Name: " + tableDinerInfo[i].dinerName),
+                        $("<h2>").text("Email: " + tableDinerInfo[i].dinerEmail),
+                        $("<h2>").text("Phone: " + tableDinerInfo[i].dinerPhone)
+                    );
+                    resevered.append(submission);
+                }
+            });
+    }
+
+    function runWaitQuery() {
+
+        $.ajax({ url: "/api/waitlist", method: "GET" })
+
+            .then(function (waitDinerInfo) {
+
+                console.log(waitDinerInfo);
+                for (var i = 0; i < waitDinerInfo.length; i++) {
+                    var waitListed = $("#waitList");
+                    var submission = $("<li class='submitResults'>");
+                    submission.append(
+                        $("<h2>").text("Table #" + (i + 1)),
+                        $("<h2>").text("ID: " + waitDinerInfo[i].dinerId),
+                        $("<h2>").text("Name: " + waitDinerInfo[i].dinerName),
+                        $("<h2>").text("Email: " + waitDinerInfo[i].dinerEmail),
+                        $("<h2>").text("Phone: " + waitDinerInfo[i].dinerPhone)
+                    );
+                    waitListed.append(submission);
+                }
+            });
+    }
+
+    runReservedQuery();
+    runWaitQuery();
+
+</script>
 
 </html>
