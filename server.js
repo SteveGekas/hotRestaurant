@@ -29,8 +29,12 @@ app.get('/api/waitlist', (req, res) => res.json(waitlist));
 app.post('/api/tables', (req, res)=>{
 
     const newReservation=req.body;
-
-    tables.push(newReservation);
+    if(tables.length>4){
+        waitlist.push(newReservation);
+    }else{
+        tables.push(newReservation);
+    }
+    
 
     console.log(tables);
 });
@@ -40,7 +44,7 @@ app.post('/api/waitlist', (req, res)=>{
 
     waitlist.push(newWaitlist);
 
-    console.log(tables);
+    console.log(waitlist);
 });
 
 

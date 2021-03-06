@@ -7,6 +7,7 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
 
 </head>
 
@@ -86,6 +87,7 @@
     let newEmail = document.getElementById('Email').value.trim();
     let newId = document.getElementById('Unique ID').value.trim();
 
+   
     let newTable = {
       name: newName,
       phone: phoneNumber,
@@ -94,21 +96,22 @@
     };
 
     //fetch api data and POST
-    fetch('/api/tables', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newTable),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('reservations.html', data);
-        alert(`Adding table: ${data.name}`);
+      fetch('/api/tables', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTable),
       })
-      .catch((error) => {
-        console.error('Error:', error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          alert(`Adding table: ${data.name}`);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+    
+
   });
 </script>
 
