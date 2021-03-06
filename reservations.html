@@ -7,6 +7,7 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+   
 
 </head>
 
@@ -45,7 +46,7 @@
                         <h4>Wait List</h4>
                     </div>
                     <div class="card-body">
-                        <ul id="waitlisted" class="submitResults"></ul>
+                        <ul id="waitlist" class="submitResults"></ul>
                     </div>
                 </div>
             </div>
@@ -55,54 +56,62 @@
 
     <footer class="footer mt-4">
         <div class="container">
-            <p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a href="/api/waitlist">API
+            <p><a href="#" id="clear">Clear Table</a> | <a href="/api/tables">API Table Link</a> | <a
+                    href="/api/waitlist">API
                     Wait List</a>
         </div>
     </footer>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
 </body>
 
 <script type="text/javascript">
+
+
     function runReservedQuery() {
+        fetch('/api/tables', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
 
-        $.ajax({ url: "/api/tables", method: "GET" })
-
-            .then(function (tableDinerInfo) {
-
-                console.log(tableDinerInfo);
-                for (var i = 0; i < tableDinerInfo.length; i++) {
-                    var reservation = $("#reserved");
-                    var submission = $("<li class='submitResults'>");
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    var submission = $("#reservation");
                     submission.append(
                         $("<h2>").text("Table #" + (i + 1)),
-                        $("<h2>").text("ID: " + tableDinerInfo[i].dinerId),
-                        $("<h2>").text("Name: " + tableDinerInfo[i].dinerName),
-                        $("<h2>").text("Email: " + tableDinerInfo[i].dinerEmail),
-                        $("<h2>").text("Phone: " + tableDinerInfo[i].dinerPhone)
+                        $("<h2>").text("ID: " + data[i].id),
+                        $("<h2>").text("Name: " + data[i].name),
+                        $("<h2>").text("Email: " + data[i].email),
+                        $("<h2>").text("Phone: " + data[i].phone)
                     );
-                    resevered.append(submission);
                 }
             });
     }
 
     function runWaitQuery() {
 
-        $.ajax({ url: "/api/waitlist", method: "GET" })
+        fetch('/api/waitlist', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
 
-            .then(function (waitDinerInfo) {
-
-                console.log(waitDinerInfo);
-                for (var i = 0; i < waitDinerInfo.length; i++) {
-                    var waitListed = $("#waitList");
-                    var submission = $("<li class='submitResults'>");
+                console.log(data);
+                for (var i = 0; i < data.length; i++) {
+                    var submission = $("#waitlist");
                     submission.append(
-                        $("<h2>").text("Table #" + (i + 1)),
-                        $("<h2>").text("ID: " + waitDinerInfo[i].dinerId),
-                        $("<h2>").text("Name: " + waitDinerInfo[i].dinerName),
-                        $("<h2>").text("Email: " + waitDinerInfo[i].dinerEmail),
-                        $("<h2>").text("Phone: " + waitDinerInfo[i].dinerPhone)
+                        $("<h2>").text("ID: " + data[i].id),
+                        $("<h2>").text("Name: " + data[i].name),
+                        $("<h2>").text("Email: " + data[i].email),
+                        $("<h2>").text("Phone: " + data[i].phone)
                     );
-                    waitListed.append(submission);
                 }
             });
     }
